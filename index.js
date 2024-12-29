@@ -28,3 +28,26 @@ app.get('/api/hello', function (req, res) {
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+
+/*  ================
+  1. Debes proporcionar tu propio proyecto, no la URL ejemplo.
+  2. Una petición a /api/whoami debe devolver un objeto JSON con tu dirección IP en la clave ipaddress.
+  3. Una petición a /api/whoami debe devolver un objeto JSON con tu idioma preferido en la clave language.
+  4. Una petición a /api/whoami debe devolver un objeto JSON con tu software en la clave de software.
+    ================
+  */
+
+app.get(
+  "/api/whoami",
+  (req, res) => {
+    let ip = req.socket.remoteAddress;
+    let headers = req.headers
+    res.json(
+      {
+        "ipaddress": ip,
+        "language": headers["accept-language"],
+        "software": headers["user-agent"]
+      }
+    )
+  }
+)
